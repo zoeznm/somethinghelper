@@ -32,7 +32,7 @@ export class AppController {
       return { answer: response.data.choices[0].text.trim() };
     } catch (error) {
       console.error('Error fetching data from OpenAI API:', error);
-      throw new Error('Failed to fetch response from OpenAI');
+      throw new Error(`Failed to fetch response from OpenAI: ${error.message}`);
     }
   }
 }
