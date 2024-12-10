@@ -1,24 +1,26 @@
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
 import './App.css';
+import axios from 'axios';
 
 function App() {
+  const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    // 백엔드 API 호출
+    axios.get('http://localhost:3000/')
+      .then(response => {
+        setMessage(response.data);
+      })
+      .catch(error => {
+        console.error('There was an error!', error);
+      });
+  }, []);
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <h1>{message}</h1>
+  </div>
   );
 }
 
