@@ -7,7 +7,7 @@ export class AppController {
   constructor(private readonly configService: ConfigService) {}
 
   @Post('respond')
-  async getAIResponse(@Body() body: { question: string }) {
+  async getAIResponse(@Body() body: { data: string }) {
     const openaiApiKey = this.configService.get<string>('OPENAI_API_KEY');
 
     if (!openaiApiKey) {
@@ -19,7 +19,7 @@ export class AppController {
         'https://api.openai.com/v1/completions',
         {
           model: 'text-davinci-003', // 또는 다른 GPT 모델 사용 가능
-          prompt: body.question,
+          prompt: body.data,
           max_tokens: 150,
         },
         {
