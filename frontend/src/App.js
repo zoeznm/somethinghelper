@@ -2,37 +2,33 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 function App() {
-  const [question, setQuestion] = useState('');
-  const [answer, setAnswer] = useState('');
+  const [inputData, setInputData] = useState("");
+  const [message, setMessage] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/api/respond', {
-        question,
+      const response = await axios.post("http://localhost:3000/api/respond", {
+        data: inputData, // 데이터 키가 'data'여야 함
       });
-      setAnswer(response.data.answer);
+      setMessage(response.data.answer); // 서버에서 'answer' 키로 응답
     } catch (error) {
-      console.error('Error fetching data', error);
+      console.error("Error fetching data:", error);
+      setMessage("Error fetching data");
     }
   };
 
   return (
-    <div>
-      <h1>답장코치 AI</h1>
+    <div className="App">
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          value={question}
-          onChange={(e) => setQuestion(e.target.value)}
-          placeholder="질문을 입력하세요"
+          value={inputData}
+          onChange={(e) => setInputData(e.target.value)}
         />
-        <button type="submit">질문 제출</button>
+        <button type="submit">Submit</button>
       </form>
-      <div>
-        <h2>AI의 답변:</h2>
-        <p>{answer}</p>
-      </div>
+      <p>{message}</p>
     </div>
   );
 }
